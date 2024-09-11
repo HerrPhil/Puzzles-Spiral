@@ -26,30 +26,50 @@ Start on the top-left element, and begin the traversal going to the right.
 
 The solution goes right, right, and right.
 
-Before we hit our right wall, on the right, we are going to turn right and move one position down.
+When the look-ahead sees the next position is the wall, then pull the wall left one position.
 
-Now we move the right wall inward, one position.
+Turn right.
 
-The solution goes down, and down.
+The solution goes down, down, and down.
 
-Before we hit our bottom wall, on the bottom, we are goint to turn right and move one position left.
+When the look-ahead sees the next position is the wall, then pull the wall up one position.
 
-Now we move the bottom wall inward, one position.
+Turn right.
 
-The soluition goes left, and left.
+The solution goes left, left, and left.
 
-Before we hit our left wall, on the left, we are going to turn right and move one position up.
+When the look-ahead sees the next position is the wall, then pull the wall right one position.
 
-Now we move the left wall inward, one position.
+Turn right.
 
-The solution goes up.
+The solution goes up, and up.
 
-Beore we hit our top wall, on the top, we are going to turn right and move one position right.
+When the look-ahead sees the next position is the wall, then pull the wall down one position.
 
-Now we move the top wall inward, one position.
+Turn right.
 
-And so on.
+The solution goes right, and right.
 
-Stop condition is when the traversal position is boxed in.
+When the look-ahead sees the next position is the wall, then pull the wall left one position.
+
+Turn right.
+
+The solution goes down.
+
+When the look-ahead sees the next position is the wall, then pull the wall up one position.
+
+Turn right.
+
+The solution goes left.
+
+When the look-ahead sees the next position is the wall, then pull the wall right one position.
+
+Turn right.
+
+The solution goes nowhere.
+
+The look-ahead sees the next position is the wall, already.
+
+Stop.
 
 It is boxed in when the next position the traversal was to move is "covered" by a wall.
