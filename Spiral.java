@@ -68,8 +68,6 @@ public class Spiral {
 
         // Otherwise, traverse the matrix
 
-        boolean result = false;
-
         int cellsVisited = 1; // default start position "visited"
 
         System.out.printf("start at position (%d, %d) and %d cells visited%n", current_x, current_y, cellsVisited);
