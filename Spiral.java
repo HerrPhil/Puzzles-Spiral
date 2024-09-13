@@ -25,18 +25,39 @@ public class Spiral {
         boolean result = spiral.solution();
 
         if (result) {
-            System.out.printf("%nthe spiral is complete%n");
+            System.out.printf("the spiral is complete%n");
         } else {
-            System.out.printf("%nthe spiral is incomplete%n");
+            System.out.printf("the spiral is incomplete%n");
         }
 
     }
 
     private int [][] s;
+    int current_x;
+    int current_y;
+
+    int min_x;
+    int min_y;
+    int max_x;
+    int max_y;
+    int size;
+
+    String direction;
 
     public Spiral(int [][] s) {
 
         this.s = s;
+
+        current_x = 0; // default start position
+        current_y = 0; // default start position
+
+        min_x = 0; // top wall
+        min_y = -1; // left wall
+        max_x = this.s.length; // bottom wall
+        max_y = this.s[0].length; // right wall
+        size = max_x * max_y;
+
+        direction = "right";
 
     }
 
@@ -46,31 +67,32 @@ public class Spiral {
         if (s.length == 0) return false;
 
         // Otherwise, traverse the matrix
-        int current_x = 0; // default start position
-        int current_y = 0; // default start position
-
-        int min_x = 0; // top wall
-        int min_y = -1; // left wall
-        int max_x = s.length; // bottom wall
-        int max_y = s[0].length; // right wall
-        int size = max_x * max_y;
-
-        String direction = "right";
 
         boolean result = false;
 
         int cellsVisited = 1; // default start position "visited"
 
+        System.out.printf("start at position (%d, %d) and %d cells visited%n", current_x, current_y, cellsVisited);
+
         while (cellsVisited < size) {
 
-            while (canMove(current_x, current_y, min_x, min_y, max_x, max_y, direction)) {
-                // traverse incrementally to the next position.
-                // base it on direction, to know what current coordinate to modify.
-                System.out.printf("TODO%n");
-                current_y++; // TEMPORARY.
+            while (canMove()) {
+
+                doMove();
+
+                cellsVisited++;
+
+                System.out.printf("at position (%d, %d) and %d cells visited%n", current_x, current_y, cellsVisited);
+
             }
 
-            cellsVisited++; // TEMPORARY.
+            // hit a wall, move in wall that was hit
+            moveWall();
+
+            // direction change required
+            // assumes clockwise direction for the spiral
+            // right -> down -> left -> up -> ...
+            changeDirection();
 
         }
 
@@ -78,7 +100,7 @@ public class Spiral {
 
     }
 
-    private boolean canMove(int current_x, int current_y, int min_x, int min_y, int max_x, int max_y, String direction) {
+    private boolean canMove() {
 
         // based on the direction, check whether the current position will hit a wall if it moves
         switch (direction) {
@@ -96,6 +118,78 @@ public class Spiral {
                 return current_x - 1 > min_x;
             default:
                 return false;
+        }
+
+    }
+
+    private void doMove() {
+
+        switch (direction) {
+            case "right":
+                current_y++;
+                break;
+            case "down":
+                current_x++;
+                break;
+            case "left":
+                current_y--;
+                break;
+            case "up":
+                current_x--;
+                break;
+            default:
+                System.out.printf("do nothing");
+        }
+
+    }
+
+    private void moveWall() {
+
+        switch (direction) {
+            case "right":
+                // move the "right" wall (max_y) in
+                max_y--;
+                break;
+            case "down":
+                // move the "bottom" wall (max_x) in
+                max_x--;
+                break;
+            case "left":
+                // move the "left" wall (min_y) in
+                min_y++;
+                break;
+            case "up":
+                // move the "top wall (min_x) in
+                min_x++;
+                break;
+            default:
+                System.out.printf("do nothing");
+        }
+
+    }
+
+
+    private void changeDirection() {
+
+        switch (direction) {
+            case "right":
+                // transition to  the down direction
+                direction = "down";
+                break;
+            case "down":
+                // transition to the left direction
+                direction = "left";
+                break;
+            case "left":
+                // transition to the up direction
+                direction = "up";
+                break;
+            case "up":
+                // transition to the right
+                direction = "right";
+                break;
+            default:
+                System.out.printf("do nothing");
         }
 
     }
